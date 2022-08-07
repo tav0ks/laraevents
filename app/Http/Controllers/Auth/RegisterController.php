@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\{User, Address};
 
 class RegisterController extends Controller
 {
@@ -17,10 +17,10 @@ class RegisterController extends Controller
     {
         $requestData = $request->all();
 
-        return $requestData;
+        $requestData['user']['role'] = 'participant';
 
-        $requestData['role'] = 'participant';
+        $user = User::create($requestData['user']);
 
-        User::create($requestData);
+        $user->address()->create($requestData['address']);
     }
 }
