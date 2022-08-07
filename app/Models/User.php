@@ -19,6 +19,10 @@ class User extends Model
         'role'
     ];
 
+    protected $hidden = [
+        'password'
+    ];
+
     //mutators
     public function setPasswordAttribute($value)
     {
