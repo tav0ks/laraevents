@@ -18,10 +18,6 @@ class RegisterController extends Controller
         $requestData = $request->all();
         $requestData['role'] = 'participant';
 
-        $password = bcrypt($requestData['password']);
-
-        $requestData['password'] = $password;
-
         User::create($requestData);
     }
 }

@@ -22,5 +22,6 @@ class User extends Model
     //mutators
     public function setPasswordAttribute($value)
     {
+        $this->attributes['password'] = bcrypt($value);
     }
 }
