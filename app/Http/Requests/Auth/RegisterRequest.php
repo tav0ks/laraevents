@@ -22,7 +22,11 @@ class RegisterRequest extends FormRequest
             'phones.1.number' => ['required', 'size:15'],
             'address.cep' => 'required',
             'address.uf' => ['required', 'size:2'],
-            'address.city'
+            'address.city' => 'required',
+            'address.street' => 'required',
+            'address.number' => ['required', 'numeric', 'interger'],
+            'address.district' => 'required',
+            'address.complement' => ['nullable', 'max:25'],
         ];
     }
 }
