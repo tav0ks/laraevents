@@ -39,7 +39,7 @@
                     <div class="col-md-6">
                         <div class="form group">
                             <input type="text" name="user[cpf]"
-                                class="form-control {{ $errors->has('user.cpf') ? 'is-invalid' : '' }}"
+                                class="form-control cpf {{ $errors->has('user.cpf') ? 'is-invalid' : '' }}"
                                 placeholder="CPF" value="{{ old('user.cpf') }}">
                             <div class="invalid-feedback">{{ $errors->first('user.cpf') }}</div>
                         </div>
@@ -65,23 +65,23 @@
                 <div class="row mt 4">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <input type="text" name="address[cep]"
-                                class="form-control {{ $errors->has('address.cep') ? 'is-invalid' : '' }}"
+                            <input type="text" name="address[cep]" id="cep"
+                                class="form-control cep {{ $errors->has('address.cep') ? 'is-invalid' : '' }}"
                                 placeholder="CEP" value="{{ old('address.cep') }}">
                             <div class="invalid-feedback">{{ $errors->first('address.cep') }}</div>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <input type="text" name="address[uf]"
-                                class="form-control {{ $errors->has('address.uf') ? 'is-invalid' : '' }}"
+                            <input type="text" name="address[uf]" id="uf"
+                                class="form-control uf {{ $errors->has('address.uf') ? 'is-invalid' : '' }}"
                                 placeholder="UF" value="{{ old('address.uf') }}">
                             <div class="invalid-feedback">{{ $errors->first('address.uf') }}</div>
                         </div>
                     </div>
                     <div class="col-md-7">
                         <div class="form-group">
-                            <input type="text" name="address[city]"
+                            <input type="text" name="address[city]" id="city"
                                 class="form-control {{ $errors->has('address.city') ? 'is-invalid' : '' }}"
                                 placeholder="Cidade" value="{{ old('address.city') }}">
                             <div class="invalid-feedback">{{ $errors->first('address.city') }}</div>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-md-9">
                         <div class="form-group">
-                            <input type="text" name="address[street]"
+                            <input type="text" name="address[street]" id="street"
                                 class="form-control {{ $errors->has('address.street') ? 'is-invalid' : '' }}"
                                 placeholder="Logradouro" value="{{ old('address.street') }}">
                             <div class="invalid-feedback">{{ $errors->first('address.street') }}</div>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text" name="address[district]"
+                            <input type="text" name="address[district]" id="district"
                                 class="form-control {{ $errors->has('address.district') ? 'is-invalid' : '' }}"
                                 placeholder="Bairro" value="{{ old('address.district') }}">
                             <div class="invalid-feedback">{{ $errors->first('address.district') }}</div>
@@ -127,7 +127,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="text" name="phones[0][number]"
-                                class="form-control {{ $errors->has('phones.0.number') ? 'is-invalid' : '' }}"
+                                class="form-control phone {{ $errors->has('phones.0.number') ? 'is-invalid' : '' }}"
                                 placeholder="Telefone" value="{{ old('phones.0.number') }}">
                             <div class="invalid-feedback">{{ $errors->first('phones.0.number') }}</div>
                         </div>
@@ -135,7 +135,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="text" name="phones[1][number]"
-                                class="form-control {{ $errors->has('phones.1.number') ? 'is-invalid' : '' }}"
+                                class="form-control cellphone {{ $errors->has('phones.1.number') ? 'is-invalid' : '' }}"
                                 placeholder="Celular" value="{{ old('phones.1.number') }}">
                             <div class="invalid-feedback">{{ $errors->first('phones.1.number') }}</div>
                         </div>
@@ -148,6 +148,33 @@
             </form>
         </div>
     </div>
+
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
+
+    <script>
+        $('.cpf').mask('000.000.000-00');
+        $('.cep').mask('00000-000');
+        $('.uf').mask('SS');
+        $('.phone').mask('(00) 0000-0000');
+        $('.cellphone').mask('(00) 00000-0000');
+
+        $(document).on('blur', '#cep', function() {
+            const cep = $(this).val();
+
+            $.ajax({
+                url: 'https://viacep.com.br/ws/' + cep + '/json/',
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#uf').val(data.uf);
+                    $('#city').val(data.localidade);
+                    $('#street').val(data.logradouro);
+                    $('#district').val(data.bairro);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

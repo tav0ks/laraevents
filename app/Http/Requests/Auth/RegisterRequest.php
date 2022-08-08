@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
             'address.uf' => ['required', 'size:2'],
             'address.city' => 'required',
             'address.street' => 'required',
-            'address.number' => ['required', 'numeric', 'interger'],
+            'address.number' => ['required', 'numeric', 'integer'],
             'address.district' => 'required',
             'address.complement' => ['nullable', 'max:25'],
         ];
