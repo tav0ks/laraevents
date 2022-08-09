@@ -8,7 +8,7 @@ use App\Http\Controllers\Auth\{
 use App\Http\Controllers\Participant\Dashboard\DashboardController as ParticipantDashboardController;
 
 use App\Http\Controllers\Organization\Dashboard\DashboardController as OrganizationDashboardController;
-
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,8 +37,10 @@ Route::group(['as' => 'auth.'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('participant/dashboard', [ParticipantDashboardController::class, 'index'])
-        ->name('participant.dashboard.index');
+        ->name('participant.dashboard.index')
+        ->middleware('role:participant');
 
     Route::get('organization/dashboard', [OrganizationDashboardController::class, 'index'])
-        ->name('organization.dashboard.index');
+        ->name('organization.dashboard.index')
+        ->middleware('role:organization');
 });
