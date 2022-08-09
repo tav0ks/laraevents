@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Services\UserService;
 
 class LoginController extends Controller
 {
@@ -22,14 +23,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $userRole = auth()->user()->role;
-
-            if ($userRole === 'participant') {
-                return redirect()->route('participant.dashboard.index');
-            }
-
-            if ($userRole === 'organization') {
-                return redirect()->route('organization.dashboard.index');
-            }
+            return redirect(UserService::gatDashboardRouteBasedOnUserRole($userRole));
         }
 
         return redirect()

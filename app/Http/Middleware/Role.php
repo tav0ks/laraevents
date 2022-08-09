@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 
 class Role
 {
@@ -13,13 +14,7 @@ class Role
         $userRole = auth()->user()->role;
 
         if ($userRole !== $role) {
-            if ($userRole === 'participant') {
-                return redirect()->route('participant.dashboard.index');
-            }
-
-            if ($userRole === 'organization') {
-                return redirect()->route('organization.dashboard.index');
-            }
+            return redirect(UserService::gatDashboardRouteBasedOnUserRole($userRole));
         }
         return $next($request);
     }
