@@ -2,6 +2,6 @@
 
 @section('title', 'Dashboard')
 
-@section('content')
+@section('content')asfdasd
     Dashboard da organização
 @endsection
