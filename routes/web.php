@@ -7,8 +7,10 @@ use App\Http\Controllers\Auth\{
 
 use App\Http\Controllers\Participant\Dashboard\DashboardController as ParticipantDashboardController;
 
-use App\Http\Controllers\Organization\Dashboard\DashboardController as OrganizationDashboardController;
-use GuzzleHttp\Middleware;
+use App\Http\Controllers\Organization\{
+    Dashboard\DashboardController as OrganizationDashboardController,
+    Event\EventController
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,5 +44,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('organization/dashboard', [OrganizationDashboardController::class, 'index'])
         ->name('organization.dashboard.index')
+        ->middleware('role:organization');
+
+    Route::get('organization/events', [EventController::class, 'index']) //CONTINUAR DAQUI ROTA DEU ERRADO
+        - name('organization.events.index')
         ->middleware('role:organization');
 });
