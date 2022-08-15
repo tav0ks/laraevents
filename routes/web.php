@@ -42,11 +42,11 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('participant.dashboard.index')
         ->middleware('role:participant');
 
-    Route::get('organization/dashboard', [OrganizationDashboardController::class, 'index'])
-        ->name('organization.dashboard.index')
-        ->middleware('role:organization');
+    Route::group(['prefix' => 'organization', 'as' => 'organization.', 'middleware' => 'role:organization'], function () {
+        Route::get('dashboard', [OrganizationDashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('organization/events', [EventController::class, 'index'])
-        ->name('organization.events.index')
-        ->middleware('role:organization');
+        Route::get('events', [EventController::class, 'index'])->name('events.index');
+
+        Route::get('events/create', [EventController::class, 'create'])->name('events.create');
+    });
 });
