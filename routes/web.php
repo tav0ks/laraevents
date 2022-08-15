@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->name('organization.dashboard.index')
         ->middleware('role:organization');
 
-    Route::get('organization/events', [EventController::class, 'index']) //CONTINUAR DAQUI ROTA DEU ERRADO
-        - name('organization.events.index')
+    Route::get('organization/events', [EventController::class, 'index'])
+        ->name('organization.events.index')
         ->middleware('role:organization');
 });
