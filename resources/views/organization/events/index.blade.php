@@ -4,7 +4,8 @@
     <form>
         <div class="d-flex justify-content-between">
             <div class="d-flex flex-fill">
-                <input type="text" name="search" class="form-control w-50 mr-2" value="" placeholder="Pesquisar...">
+                <input type="text" name="search" class="form-control w-50 mr-2" value="{{ $search }}"
+                    placeholder="Pesquisar...">
                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </div>
             <a href="{{ route('organization.events.create') }}" class="btn btn-primary">Novo evento</a>
@@ -28,11 +29,21 @@
                     <td class="align-middle">{{ $event->speaker_name }}</td>
                     <td class="align-middle">{{ $event->start_date_formatted }}</td>
                     <td class="align-middle">{{ $event->end_date_formatted }}</td>
-                    <td class="align-middle"></td>
+                    <td class="align-middle">
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('organization.events.edit', $event->id) }}" class="btn btn-sm btn primary">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <form method="POST" action="{{ route('organization.events.destroy', $event->id) }}">
+                                @csrf
+
+                            </form>
+                        </div>
+                    </td>
 
                 </tr>
             @endforeach
         </tbody>
     </table>
-    {{ $events->links() }}
+    {{ $events->withQueryString()->links() }}
 @endsection
