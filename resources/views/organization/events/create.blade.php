@@ -1,7 +1,7 @@
 @extends('layouts.panel')
 @section('title', 'Novo evento')
 @section('content')
-    <form action="" method="POST" autocomplete="off">
+    <form action='{{ route('organization.events.store') }}' method="POST" autocomplete="off">
         @csrf
         <div class="row">
             <div class="col-lg-6">
@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label for="start_date">Data de início</label>
                     <input type="text" class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}"
-                        id="start_date" name="start_date" value="{{ old('start_date') }}">
+                        id="start_date" name="start_date" value="{{ old('start_date') }}" data-mask="00/00/0000 00:00">
                     <div class="invalid-feedback">{{ $errors->first('start_date') }}</div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <label for="end_date">Data de fim</label>
                     <input type="text" class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}"
-                        id="end_date" name="end_date" value="{{ old('end_date') }}">
+                        id="end_date" name="end_date" value="{{ old('end_date') }}" data-mask="00/00/0000 00:00">
                     <div class="invalid-feedback">{{ $errors->first('end_date') }}</div>
                 </div>
             </div>
