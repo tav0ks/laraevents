@@ -21,15 +21,26 @@ class Event extends Model
     ];
 
     //mutators
-    public function setStartDateAtribute($value)
+    public function setStartDateAttribute($value)
     {
         $this->attributes['start_date'] = Carbon::createFromFormat('d/m/Y H:i', $value)
             ->format('Y-m-d H:i:s');
     }
 
-    public function setEndDateAtribute($value)
+    public function setEndDateAttribute($value)
     {
         $this->attributes['end_date'] = Carbon::createFromFormat('d/m/Y H:i', $value)
             ->format('Y-m-d H:i:s');
+    }
+
+    //accessors
+    public function getStartDateFormattedAttribute()
+    {
+        return Carbon::parse($this->start_date)->format('d/m/Y H:i');
+    }
+
+    public function getEndDateFormattedAttribute()
+    {
+        return Carbon::parse($this->End_date)->format('d/m/Y H:i');
     }
 }

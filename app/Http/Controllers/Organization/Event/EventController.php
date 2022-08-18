@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Organization\Event;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Http\Requests\Organization\Event\EventRequest;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('organization.events.index');
+        return $request->all();
+
+        return view('organization.events.index', [
+            'events' => Event::paginate(5)
+        ]);
     }
 
     public function create()

@@ -25,8 +25,7 @@ class EventRequest extends FormRequest
                 'date_format:d/m/Y H:i',
                 'after:' . $this->start_date ?? null
             ],
-            'participant_limit' => [
-                'required',
+            'participants_limit' => [
                 'numeric',
                 'integer',
                 'min:1'
