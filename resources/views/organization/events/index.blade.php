@@ -52,16 +52,5 @@
     {{ $events->withQueryString()->links() }}
 @endsection
 @section('js')
-    <script>
-        $(document).on('click', '.confirm-submit', function(event) {
-            event.preventDefault();
-
-            const confirmation = confirm('Tem certeza que deseja excluir este evento?');
-
-            if (confirmation) {
-                const form = $(this).parent();
-                form.trigger('submit');
-            }
-        });
-    </script>
+    <script src="{{ asset('js/organization/events/index.js') }}"></script>
 @endsection
