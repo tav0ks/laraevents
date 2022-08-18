@@ -31,12 +31,16 @@
                     <td class="align-middle">{{ $event->end_date_formatted }}</td>
                     <td class="align-middle">
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('organization.events.edit', $event->id) }}" class="btn btn-sm btn primary">
+                            <a href="{{ route('organization.events.edit', $event->id) }}"
+                                class="btn btn-sm btn btn-primary mr-2">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <form method="POST" action="{{ route('organization.events.destroy', $event->id) }}">
                                 @csrf
-
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn btn-danger confirm-submit">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </form>
                         </div>
                     </td>
@@ -46,4 +50,18 @@
         </tbody>
     </table>
     {{ $events->withQueryString()->links() }}
+@endsection
+@section('js')
+    <script>
+        $(document).on('click', '.confirm-submit', function(event) {
+            event.preventDefault();
+
+            const confirmation = confirm('Tem certeza que deseja excluir este evento?');
+
+            if (confirmation) {
+                const form = $(this).parent();
+                form.trigger('submit');
+            }
+        });
+    </script>
 @endsection
