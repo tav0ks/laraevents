@@ -31,6 +31,10 @@
                     <td class="align-middle">{{ $event->end_date_formatted }}</td>
                     <td class="align-middle">
                         <div class="d-flex align-items-center">
+                            <a href="{{ route('organization.events.show', $event->id) }}"
+                                class="btn btn-sm btn btn-info mr-2">
+                                <i class="fa fa-eye"></i>
+                            </a>
                             <a href="{{ route('organization.events.edit', $event->id) }}"
                                 class="btn btn-sm btn btn-primary mr-2">
                                 <i class="fa fa-edit"></i>

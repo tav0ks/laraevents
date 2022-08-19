@@ -56,6 +56,39 @@
                     <th class="text-right">Ações</th>
                 </thead>
                 <tbody>
+                    @foreach ($event->users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td class="text-right">
+                                <div class="d-flex align-items-center justify-content-end">
+                                    @if ($eventStartDateHasPassed)
+                                        <form method="POST"
+                                            action="{{ route('organization.events.presences', [
+                                                'event' => $event->id,
+                                                'user' => $user->id,
+                                            ]) }}">
+                                            @csrf
+                                            <button
+                                                class="btn btn-sm mr-2 {{ $user->pivot->present ? 'bnt-danger' : 'btn-success' }}">
+                                                {{ $user->pivot->present ? 'Remover presença' : 'Assinar presença' }}
+                                            </button>
+                                        </form>
+                                    @endif
+                                    @if (!$eventEndDateHasPassed)
+                                        <form method="POST"
+                                            action="{{ route('organization.events.subscriptions.destroy', [
+                                                'event' => $event->id,
+                                                'user' => $user->id,
+                                            ]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-danger">Remover Inscrição</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

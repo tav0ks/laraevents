@@ -10,7 +10,8 @@ use App\Http\Controllers\Participant\Dashboard\DashboardController as Participan
 use App\Http\Controllers\Organization\{
     Dashboard\DashboardController as OrganizationDashboardController,
     Event\EventController,
-    Event\EventSubscriptionController
+    Event\EventSubscriptionController,
+    Event\EventPresenceController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,10 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
         Route::post('events/{event}/subscriptions', [EventSubscriptionController::class, 'store'])
             ->name('events.subscriptions.store');
+        Route::delete('events/{event}/subscriptions/{user}', [EventSubscriptionController::class, 'destroy'])
+            ->name('events.subscriptions.destroy');
+        Route::post('events/{event}/presences/{user}', EventPresenceController::class)
+            ->name('events.presences');
         Route::resource('events', EventController::class);
     });
 });
