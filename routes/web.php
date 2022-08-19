@@ -9,7 +9,8 @@ use App\Http\Controllers\Participant\Dashboard\DashboardController as Participan
 
 use App\Http\Controllers\Organization\{
     Dashboard\DashboardController as OrganizationDashboardController,
-    Event\EventController
+    Event\EventController,
+    Event\EventSubscriptionController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -43,13 +44,19 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware('role:participant');
 
     Route::group(['prefix' => 'organization', 'as' => 'organization.', 'middleware' => 'role:organization'], function () {
+        //dashboard
         Route::get('dashboard', [OrganizationDashboardController::class, 'index'])->name('dashboard.index');
 
-        Route::get('events', [EventController::class, 'index'])->name('events.index');
-        Route::get('events/create', [EventController::class, 'create'])->name('events.create');
-        Route::post('events', [EventController::class, 'store'])->name('events.store');
-        Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
-        Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
-        Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+        //eventos
+        // Route::get('events', [EventController::class, 'index'])->name('events.index');
+        // Route::get('events/create', [EventController::class, 'create'])->name('events.create');
+        // Route::post('events', [EventController::class, 'store'])->name('events.store');
+        // Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+        // Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+        // Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
+        // Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+        Route::post('events/{event}/subscriptions', [EventSubscriptionController::class, 'store'])
+            ->name('events.subscriptions.store');
+        Route::resource('events', EventController::class);
     });
 });
